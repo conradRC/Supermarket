@@ -12,9 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import org.ietf.jgss.Oid;
-
-import model.Hilos;
+import model.Caja;
+import model.Generar;
 import view.Componentes;
 
 public class ControlComponentes implements ActionListener {
@@ -26,18 +25,13 @@ public class ControlComponentes implements ActionListener {
 	public ArrayList<JButton> botones;
 	public ArrayList<JPanel> paneles;
 	public static ArrayList<JLabel> etiquetas;
-	public ArrayList<Hilos> hebras;
-	public ArrayList<Integer> tempos;
-	public int [] temp = new int [] {10,5,15,3,2}; 
+	public ArrayList<Integer> tempos; 
 	public ControlComponentes(JPanel componentes){
 		this.componentes = (Componentes) componentes;
 		numero = 0;
 		botones = new ArrayList<>();
 		paneles = new ArrayList<>();
 		etiquetas = new ArrayList<>();
-		hebras = new ArrayList<>();
-		
-		//tempos = new ArrayList<>();
 	}
 
 	@Override
@@ -57,7 +51,6 @@ public class ControlComponentes implements ActionListener {
 				}
 				componentes.btnAgregar.setEnabled(false);
 				componentes.txtCajas.setEnabled(false);
-				//random();
 				createHilos();
 			}
 			componentes.cajas.updateUI();
@@ -91,22 +84,19 @@ public class ControlComponentes implements ActionListener {
 	}
 	
 	public void createHilos() {
-		
-		for (int c = 0; c < botones.size(); c++) {
+		 Generar.generarFilas(); 
+	       
+	       long initialTime = System.currentTimeMillis();
+	       Caja caja1 = new Caja("Yajandi", Generar.filas.get(0), initialTime);
+	       //Caja caja2 = new Caja("Evelyn", Generar.filas.get(1), initialTime);
+	       caja1.start();
+	       //caja2.start();
+	       
+		/*for (int c = 0; c < botones.size(); c++) {
 			System.out.println(temp[c]);
 			Hilos hilos = new Hilos(temp[c],"Hilo "+numero);
 			hilos.start();
-			hebras.add(hilos);
-		}
+			hebras.add(hilos);*/
+		//}
 	}
-	
-	public void random() {
-		Random random = new Random();
-		for (int c = 0; c < botones.size(); c++) {
-			int aleatorio = (random.nextInt(6000)+200);
-			System.out.println(aleatorio);
-			tempos.add(aleatorio);
-		}
-	}
-	
 }
