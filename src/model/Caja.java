@@ -1,5 +1,7 @@
-import java.util.ArrayList;
+package model;
+
 import java.util.Queue;
+
 public class Caja extends Thread {
     private String nombre;
     private Queue<Cliente> cliente;
@@ -28,16 +30,14 @@ public class Caja extends Thread {
        int total=0;
        while(!Principal.clientes.isEmpty()){
           Cliente client = Principal.clientes.poll();
-          for(int c =0 ; c<Principal.carro1.size(); c++){
-               timeWait(client.getCarroCompra().get(c));
-              System.out.println("Productos: " + client.getCarroCompra().get(c) +
+          for(int c =0 ; c<client.getCarroCompra().length; c++){
+               timeWait(client.getCarroCompra()[c]);
+              System.out.println("Productos: " + client.getCarroCompra()[c] +
                                  " :  cliente: " + client.getNombre() + "->Tiempo: "+ 
                               (System.currentTimeMillis() - initialTime) / 1000+ "s");
-              total+= client.getCarroCompra().get(c);
+              total+= client.getCarroCompra()[c];
            }
            System.out.println("cliente: " +client.getNombre() +"  Total productos : " + total);
-           //System.out.println(nombre + "-> TERMINÓ " + Principal.clientes.get(c).getNombre() + "-> TIME ALL: "+
-            //                (System.currentTimeMillis() - initialTime) / 1000+ "s");
        }
     }
 
@@ -48,6 +48,8 @@ public class Caja extends Thread {
            Thread.currentThread().interrupt();
         }
     }
+    //System.out.println(nombre + "-> TERMINÓ " + Principal.clientes.get(c).getNombre() + "-> TIME ALL: "+
+            //                (System.currentTimeMillis() - initialTime) / 1000+ "s");
 
     /* System.out.println( nombre + " con el cliente " 
                     + cliente.getNombre() + " EN EL TIEMPO: " 

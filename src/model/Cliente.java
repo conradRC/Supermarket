@@ -1,8 +1,9 @@
-import java.util.ArrayList;
+package model;
+
 public class Cliente {
     private String nombre;
-    private ArrayList <Byte> carroCompra;
-    public Cliente(String nombre, ArrayList <Byte> carroCompra) {
+    private byte [] carroCompra;
+    public Cliente(String nombre, byte [] carroCompra) {
         this.nombre = nombre;
         this.carroCompra = carroCompra;
     }
@@ -11,7 +12,7 @@ public class Cliente {
         return nombre;
     }
 
-    public ArrayList <Byte> getCarroCompra() {
+    public byte [] getCarroCompra() {
         return carroCompra;
     }
 }
