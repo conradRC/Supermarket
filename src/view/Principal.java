@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.JFrame;
 
+import model.Reloj;
+
 /**
  * @author Conrad
  *
@@ -17,9 +19,12 @@ public class Principal extends JFrame {
 	
 	public static void main(String[] args) {
 		Principal frame = new Principal();
+		new Reloj().start(); 
 		frame.setVisible(true);
 	}
+	
 }
  
+
 
 

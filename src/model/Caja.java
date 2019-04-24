@@ -8,6 +8,7 @@ public class Caja extends Thread {
     private String nombre;
   	private Queue<Cliente> cliente;
     private long initialTime;
+    
     public Caja(String nombre, Queue <Cliente> cliente, long initialTime) {
         this.nombre = nombre;
         this.cliente = cliente;
@@ -36,6 +37,9 @@ public class Caja extends Thread {
        int total=0;
        byte countFila =0;
        byte countClient=0;
+       
+    
+       
        for (int i = 0; i < Generar.filas.size(); i++) {
     	   countFila++;
     	   System.out.println("fila :" + countFila );
@@ -43,10 +47,10 @@ public class Caja extends Thread {
     		   
     		   Cliente client = Generar.filas.get(i).poll();
     		   countClient++;
-        	   System.out.println("cliente :" + countClient );
-        	   System.out.println("cliente: " +client.getNombre() +"  Total productos : " + client.getTotal());
-    		   ControlComponentes.etiquetas.get(0).setText(client.getNombre()+" -> Productos: "+ client.getTotal());
-          
+        	   //System.out.println("cliente :" + countClient );
+    		   
+        	   System.out.println("Cajera: "+this.getName()+"  "+"cliente: " +client.getNombre() +"  Total productos : " + client.getTotal());
+    		   ControlComponentes.etiquetas.get(i).setText(client.getNombre()+" -> Productos: "+ client.getTotal());
     		   for(int c =0 ; c<client.getCarroCompra().length; c++){
     			   timeWait(client.getCarroCompra()[c]);
     			   System.out.println("Productos: " + client.getCarroCompra()[c] +

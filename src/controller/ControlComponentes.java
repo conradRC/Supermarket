@@ -88,9 +88,9 @@ public class ControlComponentes implements ActionListener {
 	       
 	       long initialTime = System.currentTimeMillis();
 	       Caja caja1 = new Caja("Yajandi", Generar.filas.get(0), initialTime);
-	       //Caja caja2 = new Caja("Evelyn", Generar.filas.get(1), initialTime);
+	       Caja caja2 = new Caja("Evelyn", Generar.filas.get(1), initialTime);
 	       caja1.start();
-	       //caja2.start();
+	       caja2.start();
 	       
 		/*for (int c = 0; c < botones.size(); c++) {
 			System.out.println(temp[c]);
