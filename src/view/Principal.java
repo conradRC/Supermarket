@@ -20,4 +20,8 @@ public class Principal extends JFrame {
 		Principal frame = new Principal();
 		frame.setVisible(true);
 	}
+	/**
+	* xD
+	*/
+	//hola
 }
