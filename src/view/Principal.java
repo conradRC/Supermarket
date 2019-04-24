@@ -6,6 +6,7 @@ import javax.swing.JFrame;
  * @author Conrad
  *
  */
+
 public class Principal extends JFrame {
 	Componentes componentes = new Componentes();
 	public Principal() {
@@ -14,12 +15,9 @@ public class Principal extends JFrame {
 		setLocationRelativeTo(null);
 		add(componentes);
 	}
-	
+
 	public static void main(String[] args) {
 		Principal frame = new Principal();
 		frame.setVisible(true);
 	}
 }
- 
-
-
