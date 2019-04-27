@@ -28,7 +28,10 @@ public class ControlComponentes implements ActionListener {
     public static ArrayList<JLabel> etiquetas;
     public ArrayList<Integer> tempos;
     ControlCajas ctrlCajas = new ControlCajas(this);
-    public ControlComponentes(JPanel componentes) {
+    public Caja caja1;
+    
+
+	public ControlComponentes(JPanel componentes) {
         this.componentes = (Componentes) componentes;
         numero = 0;
         botones = new ArrayList<>();
@@ -66,7 +69,7 @@ public class ControlComponentes implements ActionListener {
     	   		componentes.getBtIniciar().setEnabled(false);
     	   		new Reloj().start();
     	   		long initialTime = System.currentTimeMillis();
-    	   		Caja caja1 = new Caja("Cajer@", Generar.filas.get(0), initialTime);
+    	   		caja1 = new Caja("Cajer@", Generar.filas.get(0), initialTime);
     	   		//Caja caja2 = new Caja("Evelyn", Generar.filas.get(1), initialTime);
     	   		caja1.start();
     	   	}
@@ -75,12 +78,6 @@ public class ControlComponentes implements ActionListener {
     	   	}
     	   	
         }
-       
-        
-        /*if (e.getSource() == componentes.getAddd()) {
-            info =new view.Info();
-            info.inicio();
-        }*/
     }
 
     public void createComponent() {
@@ -108,4 +105,8 @@ public class ControlComponentes implements ActionListener {
         
         Generar.generarFilas();
     }
+    
+    public Caja getCaja1() {
+		return caja1;
+	}
 }
