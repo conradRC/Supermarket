@@ -56,6 +56,7 @@ public class ControlComponentes implements ActionListener {
                 componentes.txtCajas.setEnabled(false);
                 componentes.getBtIniciar().setBackground(Color.GREEN);
                 //createHilos();
+                
                 //xD
             }
             componentes.cajas.updateUI();
@@ -65,6 +66,8 @@ public class ControlComponentes implements ActionListener {
        if (e.getSource() == componentes.getBtIniciar()) {
     	   	
     	   	if(ctrlCajas.getFlag()==1) {
+    	   		Generar.generarFilas();
+    	   		
     	   		componentes.getBtIniciar().setBackground(Color.WHITE);
     	   		componentes.getBtIniciar().setEnabled(false);
     	   		new Reloj().start();
@@ -102,8 +105,6 @@ public class ControlComponentes implements ActionListener {
 
         componentes.cajas.add(boton);
         componentes.fila.add(panel);
-        
-        Generar.generarFilas();
     }
     
     public Caja getCaja1() {
