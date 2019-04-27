@@ -1,10 +1,9 @@
-papackage controller;
+package controller;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,6 +13,7 @@ import javax.swing.border.LineBorder;
 
 import model.Caja;
 import model.Generar;
+import model.Reloj;
 import view.Componentes;
 
 public class ControlComponentes implements ActionListener {
@@ -27,9 +27,7 @@ public class ControlComponentes implements ActionListener {
     public ArrayList<JPanel> paneles;
     public static ArrayList<JLabel> etiquetas;
     public ArrayList<Integer> tempos;
-
-    private view.Info info ;
-
+    ControlCajas ctrlCajas = new ControlCajas(this);
     public ControlComponentes(JPanel componentes) {
         this.componentes = (Componentes) componentes;
         numero = 0;
@@ -53,16 +51,36 @@ public class ControlComponentes implements ActionListener {
                 }
                 componentes.getBtnAgregar().setEnabled(false);
                 componentes.txtCajas.setEnabled(false);
-                createHilos();
+                componentes.getBtIniciar().setBackground(Color.GREEN);
+                //createHilos();
                 //xD
             }
             componentes.cajas.updateUI();
             componentes.fila.updateUI();
         }
-        if (e.getSource() == componentes.getAddd()) {
+        
+       if (e.getSource() == componentes.getBtIniciar()) {
+    	   	
+    	   	if(ctrlCajas.getFlag()==1) {
+    	   		componentes.getBtIniciar().setBackground(Color.WHITE);
+    	   		componentes.getBtIniciar().setEnabled(false);
+    	   		new Reloj().start();
+    	   		long initialTime = System.currentTimeMillis();
+    	   		Caja caja1 = new Caja("Cajer@", Generar.filas.get(0), initialTime);
+    	   		//Caja caja2 = new Caja("Evelyn", Generar.filas.get(1), initialTime);
+    	   		caja1.start();
+    	   	}
+    	   	else {
+    	   		JOptionPane.showMessageDialog(null, "Primero escoja las cajas que desea que esten abiertas o cerradas");
+    	   	}
+    	   	
+        }
+       
+        
+        /*if (e.getSource() == componentes.getAddd()) {
             info =new view.Info();
             info.inicio();
-        }
+        }*/
     }
 
     public void createComponent() {
@@ -87,26 +105,7 @@ public class ControlComponentes implements ActionListener {
 
         componentes.cajas.add(boton);
         componentes.fila.add(panel);
-    }
-
-
-
-
-
-    public void createHilos() {
+        
         Generar.generarFilas();
-
-        long initialTime = System.currentTimeMillis();
-        Caja caja1 = new Caja("Cajer@", Generar.filas.get(0), initialTime);
-        //Caja caja2 = new Caja("Evelyn", Generar.filas.get(1), initialTime);
-        caja1.start();
-        //caja2.start();
-
-        /*for (int c = 0; c < botones.size(); c++) {
-			System.out.println(temp[c]);
-			Hilos hilos = new Hilos(temp[c],"Hilo "+numero);
-			hilos.start();
-			hebras.add(hilos);*/
-        //}
     }
 }

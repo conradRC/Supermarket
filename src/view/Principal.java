@@ -20,10 +20,8 @@ public class Principal extends JFrame {
         add(componentes);
 
     }
-
     public static void main(String[] args) {
         Principal frame = new Principal();
-        new Reloj().start();
         frame.setVisible(true);
     }
 

@@ -9,16 +9,20 @@ public class ControlCajas implements ActionListener {
 
     public ControlComponentes componentes;
     boolean bandera;
+    private JButton boton;
+    private String nombre;
+    private static byte flag=0;
 
-    public ControlCajas(ControlComponentes componentes) {
+	public ControlCajas(ControlComponentes componentes) {
         this.componentes = componentes;
         bandera = false;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton boton = (JButton) e.getSource();
-        String nombre = boton.getName();
+        boton = (JButton) e.getSource();
+        nombre = boton.getName();
+        flag=1;
         for (byte c = 0; c < componentes.botones.size(); c++) {
             if ((nombre).equals("" + c)) {
                 estado(c);
@@ -28,16 +32,17 @@ public class ControlCajas implements ActionListener {
 
     public void estado(byte posicion) {
         if (bandera == false) {
-
-            componentes.botones.get(posicion).setBackground(Color.BLACK);
+            componentes.botones.get(posicion).setBackground(Color.GREEN);
+            boton.setText("Caja Abierta");
             bandera = true;
-            System.out.println("CAJA CERRADA\n (" + bandera+")");
         } else {
-
-            componentes.botones.get(posicion).setBackground(Color.WHITE);
+            componentes.botones.get(posicion).setBackground(Color.RED);
+            boton.setText("Caja Cerrada");
             bandera = false;
-            System.out.println("CAJA ABIERTA\n (" + bandera+")");
-
         }
     }
+    
+    public byte getFlag() {
+		return flag;
+	}
 }
