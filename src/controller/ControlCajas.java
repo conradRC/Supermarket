@@ -12,7 +12,7 @@ public class ControlCajas implements ActionListener {
     private JButton boton;
     private String nombre;
     private static byte flag=0;
-    private static byte cont =0;
+    private byte[] cont;
 
 	public ControlCajas(ControlComponentes componentes) {
         this.componentes = componentes;
@@ -32,23 +32,29 @@ public class ControlCajas implements ActionListener {
     }
 
     public void estado(byte posicion) {
+    	if (cont == null) {
+    		cont = new byte[componentes.botones.size()];
+            for(byte i=0; i<componentes.botones.size(); i++) {
+            	cont[i] = 0;
+            }
+    	}
         if (bandera == false) {
-        	if(cont ==1) {
+        	if(cont[posicion] == 1) {
             	componentes.botones.get(posicion).setBackground(Color.GREEN);
             	boton.setText("Caja Abierta");
             	bandera = true;
-            	componentes.caja1.renaudarhilo();
+            	componentes.hilos.get(posicion).renaudarhilo();
         	}
         	else {
         		componentes.botones.get(posicion).setBackground(Color.GREEN);
             	boton.setText("Caja Abierta");
             	bandera = true;
-            	cont=1;
+            	cont[posicion]=1;
         	}
         } else {
             componentes.botones.get(posicion).setBackground(Color.RED);
             boton.setText("Caja Cerrada");
-			componentes.caja1.suspenderhilo();
+			componentes.hilos.get(posicion).suspenderhilo();
             bandera = false;
         }
     }

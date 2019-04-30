@@ -23,6 +23,8 @@ public class Componentes extends JPanel {
     public static JLabel lblTime;
     private JButton btIniciar;
 
+    public static Componentes componente;
+    
 	public Componentes() {
 
         GridBagLayout gbc = new GridBagLayout();
@@ -140,5 +142,9 @@ public class Componentes extends JPanel {
     public JButton getBtIniciar() {
 		return btIniciar;
 	}
+    
+    public static Componentes get() {
+    	return componente;
+    }
 
 }

@@ -26,10 +26,10 @@ public class ControlComponentes implements ActionListener {
     public ArrayList<JButton> botones;
     public ArrayList<JPanel> paneles;
     public static ArrayList<JLabel> etiquetas;
+    public ArrayList<Caja> hilos;
     public ArrayList<Integer> tempos;
     ControlCajas ctrlCajas = new ControlCajas(this);
-    public Caja caja1;
-    
+    public static byte canCajas;
 
 	public ControlComponentes(JPanel componentes) {
         this.componentes = (Componentes) componentes;
@@ -37,6 +37,7 @@ public class ControlComponentes implements ActionListener {
         botones = new ArrayList<>();
         paneles = new ArrayList<>();
         etiquetas = new ArrayList<>();
+        hilos = new ArrayList<>();
     }
 
     @Override
@@ -47,7 +48,7 @@ public class ControlComponentes implements ActionListener {
             if (componentes.txtCajas.getText().length() == 0) {
                 JOptionPane.showMessageDialog(null, "Ingrese una cantidad de cajas para Iniciar");
             } else {
-                byte canCajas = (byte) Integer.parseInt(componentes.txtCajas.getText());
+            	canCajas = (byte) Integer.parseInt(componentes.txtCajas.getText());
                 for (byte c = 0; c < canCajas; c++) {
                     createComponent();
                     numero++;
@@ -55,16 +56,12 @@ public class ControlComponentes implements ActionListener {
                 componentes.getBtnAgregar().setEnabled(false);
                 componentes.txtCajas.setEnabled(false);
                 componentes.getBtIniciar().setBackground(Color.GREEN);
-                //createHilos();
-                
-                //xD
             }
             componentes.cajas.updateUI();
             componentes.fila.updateUI();
         }
         
        if (e.getSource() == componentes.getBtIniciar()) {
-    	   	
     	   	if(ctrlCajas.getFlag()==1) {
     	   		Generar.generarFilas();
     	   		
@@ -72,9 +69,13 @@ public class ControlComponentes implements ActionListener {
     	   		componentes.getBtIniciar().setEnabled(false);
     	   		new Reloj().start();
     	   		long initialTime = System.currentTimeMillis();
-    	   		caja1 = new Caja("Cajer@", Generar.filas.get(0), initialTime);
-    	   		//Caja caja2 = new Caja("Evelyn", Generar.filas.get(1), initialTime);
-    	   		caja1.start();
+    	   		
+    	   		
+    	   		for (int c = 0; c <canCajas ; c++) {
+					hilos.add(new Caja("Caja "+c, Generar.filas.get(c), initialTime, c));
+					hilos.get(c).start();
+				}
+    	   		
     	   	}
     	   	else {
     	   		JOptionPane.showMessageDialog(null, "Primero escoja las cajas que desea que esten abiertas o cerradas");
@@ -107,7 +108,8 @@ public class ControlComponentes implements ActionListener {
         componentes.fila.add(panel);
     }
     
-    public Caja getCaja1() {
-		return caja1;
+    public static byte getCanCajas() {
+		return canCajas;
 	}
+ 
 }
