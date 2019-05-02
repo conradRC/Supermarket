@@ -27,10 +27,13 @@ public class ControlComponentes implements ActionListener {
     public ArrayList<JPanel> paneles;
     public static ArrayList<JLabel> etiquetas;
     public ArrayList<Caja> hilos;
-    public ArrayList<Integer> tempos;
+    public static boolean iniciar=false ;
+	
+	public ArrayList<Integer> tempos;
     ControlCajas ctrlCajas = new ControlCajas(this);
     public static byte canCajas;
-
+    
+    
 	public ControlComponentes(JPanel componentes) {
         this.componentes = (Componentes) componentes;
         numero = 0;
@@ -44,11 +47,10 @@ public class ControlComponentes implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == componentes.getBtnAgregar()) {
-
-            if (componentes.txtCajas.getText().length() == 0) {
+        	   canCajas = (byte) Integer.parseInt(componentes.txtCajas.getText());
+            if (componentes.txtCajas.getText().length() == 0 || canCajas<=0) {
                 JOptionPane.showMessageDialog(null, "Ingrese una cantidad de cajas para Iniciar");
             } else {
-            	canCajas = (byte) Integer.parseInt(componentes.txtCajas.getText());
                 for (byte c = 0; c < canCajas; c++) {
                     createComponent();
                     numero++;
@@ -56,30 +58,28 @@ public class ControlComponentes implements ActionListener {
                 componentes.getBtnAgregar().setEnabled(false);
                 componentes.txtCajas.setEnabled(false);
                 componentes.getBtIniciar().setBackground(Color.GREEN);
-            }
-            componentes.cajas.updateUI();
-            componentes.fila.updateUI();
+             }
+        componentes.cajas.updateUI();
+        componentes.fila.updateUI();
         }
         
        if (e.getSource() == componentes.getBtIniciar()) {
-    	   	if(ctrlCajas.getFlag()==1) {
-    	   		Generar.generarFilas();
-    	   		
-    	   		componentes.getBtIniciar().setBackground(Color.WHITE);
-    	   		componentes.getBtIniciar().setEnabled(false);
-    	   		new Reloj().start();
-    	   		long initialTime = System.currentTimeMillis();
-    	   		
-    	   		
-    	   		for (int c = 0; c <canCajas ; c++) {
-					hilos.add(new Caja("Caja "+c, Generar.filas.get(c), initialTime, c));
-					hilos.get(c).start();
-				}
-    	   		
-    	   	}
-    	   	else {
-    	   		JOptionPane.showMessageDialog(null, "Primero escoja las cajas que desea que esten abiertas o cerradas");
-    	   	}
+    	   componentes.getBtIniciar().setBackground(Color.WHITE);
+	   	   componentes.getBtIniciar().setEnabled(false);
+	   		
+    	   iniciar =true;
+    	   if(ctrlCajas.getFlag()>=canCajas) {
+    		   Generar.generarFilas();
+    		   long initialTime = System.currentTimeMillis();
+    		   for (byte c = 0; c <canCajas ; c++) {
+    			   hilos.add(new Caja("Caja "+c, Generar.filas.get(c), initialTime, c));
+    		   }
+    		   ctrlCajas.iniciarHilos();
+    	   }
+    	   
+    	   else {
+    		   JOptionPane.showMessageDialog(null, "Primero escoja las cajas que desea que esten abiertas o cerradas");
+    	   }
     	   	
         }
     }
@@ -110,6 +110,12 @@ public class ControlComponentes implements ActionListener {
     
     public static byte getCanCajas() {
 		return canCajas;
+	}
+    public ArrayList<Caja> getHilos() {
+		return hilos;
+	}
+    public boolean getIniciar() {
+		return iniciar;
 	}
  
 }

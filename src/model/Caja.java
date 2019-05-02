@@ -30,35 +30,34 @@ public class Caja extends Thread {
 
 		for (int i = 0; i < Generar.filas.size(); i++) {
 			countFila++;
-			System.out.println("fila :" + countFila);
+			//System.out.println("fila :" + countFila);
 
 			while (!Generar.filas.get(i).isEmpty()) {
 				Cliente client = Generar.filas.get(i).poll();
 				countClient++;
-				System.out.println("\nCajera: " + this.getNombre() + "  " + "cliente: " + client.getNombre()
-						+ "  Total productos : " + client.getTotal());
+				//System.out.println("\nCajera: " + this.getNombre() + "  " + "cliente: " + client.getNombre()
+					//	+ "  Total productos : " + client.getTotal());
 
-				ControlComponentes.etiquetas.get(index)
-						.setText(client.getNombre() + " -> Productos: " + client.getTotal());
+				ControlComponentes.etiquetas.get(index).setText(client.getNombre() + " -> Productos: " + client.getTotal());
 
-				for (int c = 0; c < client.getCarroCompra().length; c++) {
-					synchronized (this) {
-						while (suspender) {
-							try {
-								wait();
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-						if (pausar)
-							break;
-					}
+				 for(int c =0 ; c<client.getCarroCompra().length; c++){
+	    			  
 
 					timeWait(client.getCarroCompra()[c]);
 
-					System.out.println("Productos: " + client.getCarroCompra()[c] + " :  cliente: " + client.getNombre()
-							+ "->Tiempo: " + (System.currentTimeMillis() - initialTime) / 1000 + "s");
-
+				//	System.out.println("Productos: " + client.getCarroCompra()[c] + " :  cliente: " + client.getNombre()
+					//		+ "->Tiempo: " + (System.currentTimeMillis() - initialTime) / 1000 + "s");
+					 synchronized (this) {
+	                       while (suspender) {
+	                    	   try {
+	                    		   wait();
+	                    	   }
+	                    	   catch (InterruptedException e) {
+	                    		   e.printStackTrace();
+	                    	   }
+	                       }
+	                       if (pausar) break;
+	                   }
 					total += client.getCarroCompra()[c];
 				}
 			}

@@ -34,7 +34,7 @@ public class Generar {
 
    public static void generarFilas() {
 	   
-	   for (byte c = 0; c <ControlComponentes.getCanCajas() ; c++)
+	   for (byte c = 0; c <ControlComponentes.canCajas ; c++)
 		   filas.add(generarClientes());
    }
 }

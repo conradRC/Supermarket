@@ -22,7 +22,7 @@ public class Componentes extends JPanel {
     private JLabel lbIngresar;
     public static JLabel lblTime;
     private JButton btIniciar;
-
+    
     public static Componentes componente;
     
 	public Componentes() {
