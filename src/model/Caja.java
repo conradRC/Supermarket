@@ -41,7 +41,7 @@ public class Caja extends Thread {
 				ControlComponentes.etiquetas.get(index).setText(client.getNombre() + " -> Productos: " + client.getTotal());
 
 				 for(int c =0 ; c<client.getCarroCompra().length; c++){
-	    			  
+
 
 					timeWait(client.getCarroCompra()[c]);
 
@@ -50,13 +50,16 @@ public class Caja extends Thread {
 					 synchronized (this) {
 	                       while (suspender) {
 	                    	   try {
-	                    		   wait();
+	                    		   this.wait();
 	                    	   }
 	                    	   catch (InterruptedException e) {
 	                    		   e.printStackTrace();
 	                    	   }
 	                       }
-	                       if (pausar) break;
+												 if (!suspender) {
+                            this.notify();
+                            break;
+                        }
 	                   }
 					total += client.getCarroCompra()[c];
 				}
@@ -90,7 +93,7 @@ public class Caja extends Thread {
 	// Renaudar un hilo
 	public synchronized void renaudarhilo() {
 		suspender = false;
-		notify();
+		notifyAll();
 	}
 
 	public void setNombre(String nombre) {
